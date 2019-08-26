@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <title>Cost Preview</title>
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-resource.min.js"></script>
+    <script src="app.js"></script>
+    <!-- Links -->
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet"/>
+</head>
+<body ng-controller="myController">
+<div class="container" style="padding:10px 10px;">
+    <h2>Preview Employee Costs</h2>
+    <!-- Form -->
+    <div class="well clearfix">
+        <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Add Employee(s)/Dependent(s)</legend>
+            <form align="center" name="myForm" class="form-inline">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" ng-model="firstName" placeholder="First">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" ng-model="lastName" placeholder="Last">
+                </div>
+                <button type="button" class="btn btn-primary" ng-disabled="disableEmployeeAdd" ng-click="addEmployee()"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add Employee</button>
+                <button type="button" class="btn btn-primary" ng-disabled="disableDependentAdd" ng-click="addDependent()"><i class="glyphicon glyphicon-plus"></i>&nbsp;Add Spouse/Dependent</button>
+                <button type="button" class="btn btn-danger" ng-click="resetApplication()"><i class="glyphicon glyphicon-refresh"></i>&nbsp;Reset</button>
+            </form>
+        </fieldset>
+    </div>
+    <!-- Table -->
+    <table class="table table-bordered" id="tbl_employees">
+        <thead>
+        <tr class="active">
+            <th>#</th>
+            <th>Employee Name</th>
+            <th>Employee/Dependent</th>
+            <th>Cost</th>
+            <th>Remove</th>
+        </tr>
+        </thead>
+        <tbody id="tbl_posts_body">
+        <tr ng-repeat="emp in employees track by $index">
+            <td><span class="sn">{{emp.id}}</span>.</td>
+            <td>{{emp.employee_name}}</td>
+            <td>{{emp.is_employee}}</td>
+            <td>{{emp.cost}}</td>
+            <td><a class="btn btn-xs delete-record" ng-click="removeRow($index)"><i class="glyphicon glyphicon-trash"></i></a></td>
+        </tr>
+        </tbody>
+        <!-- Cost Results -->
+        <tr class="info">
+            <td></td>
+            <td><b>Total Yearly Cost = {{total}}</b></td>
+            <td><b>Per Paycheck Cost = {{costPerPaycheck}}</b></td>
+            <td><b>Yearly Salary Remaining = {{yearlyRemaining}}</b></td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
